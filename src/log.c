@@ -41,7 +41,10 @@ int log_clock_gettime_realtime (struct timespec *ts) {
       #endif
 }
 
-/* retry write on EINTR or when not all data was written */
+/* retry write on EINTR or when not all data was written 
+   防止系统调用(write)因为信号打断而不再执行，所以这里把系统调用
+   放在一个whie循环中
+*/
 ssize_t write_all(int fd, const void* buf, size_t count) {
 	ssize_t written = 0;
 
